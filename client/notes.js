@@ -21,6 +21,7 @@ toggleRight.addEventListener("click" , ()=>{
 createNotebtn.addEventListener("click" , ()=>{
     noContent.classList.add("hidden");
     noteForm.classList.remove("hidden");
+    createNoteId()
 })
 
 const newNote = {
@@ -33,7 +34,7 @@ let timer
 let currentNoteId = null;
 
 const createNoteId= async()=>{
-    const res = await fetch("localhost:8080/createNote" , {
+    const res = await fetch("http://localhost:8080/createNote" , {
         method:"POST",
         headers:{
             "Content-Type": "application/json"
@@ -42,8 +43,10 @@ const createNoteId= async()=>{
 
     })
 
-    const note = await res.json;
-    currentNoteId = note.id;
+    const note = await res.json();
+    console.log(note)
+    currentNoteId = note.data.id;
+    console.log(currentNoteId)
 }
 
 noteTitle.addEventListener("input" , () =>{

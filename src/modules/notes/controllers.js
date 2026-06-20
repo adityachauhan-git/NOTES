@@ -1,10 +1,13 @@
 import {createNoteService , saveNoteService}from "./service.js"
 
 const createNote = async (req ,res)=>{
-    console.log(req.body)
+    
     const data = req.body;
-    console.log(data)
+
     const result = await createNoteService(data)
+
+    console.log(result)
+
 
     res.status(201).json(
         {
