@@ -54,7 +54,7 @@ noteTitle.addEventListener("input" , () =>{
 async function autoSave(data){
     clearTimeout(timer);
     
-    timer = setTimeout(() =>{
+    timer = setTimeout(async() =>{
         console.log("Title Saved!");
         const res = await fetch("localhost:8080/saveNote" , {
             method:"PUT",
