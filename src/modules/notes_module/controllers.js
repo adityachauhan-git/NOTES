@@ -6,7 +6,7 @@ const createNote = async (req ,res)=>{
 
     const result = await createNoteService(data)
 
-    console.log(result)
+    console.log("This is the first row of the returning value : " , result)
 
 
     res.status(201).json(
