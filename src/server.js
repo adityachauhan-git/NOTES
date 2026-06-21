@@ -15,4 +15,3 @@ app.use(route)
 app.listen(PORT , ()=>{
     console.log("Server Started")
 })
-console.log(process.env.DATABASE_URL);

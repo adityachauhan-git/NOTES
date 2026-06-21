@@ -5,8 +5,8 @@
         const {title , content} = data
 
         try{
-        const result = await pool.query("INSERT INTO notes (title , content) VALUES ($1 , $2) RETURNING *" , [title , content])
-        console.log(result)
+        const result = await pool.query("INSERT INTO notes (title , content) VALUES ($1,$2) RETURNING *" , ["" , ""])
+        
         return result.rows[0]
         }
         catch(err){
