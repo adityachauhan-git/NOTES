@@ -1,4 +1,4 @@
-import { registerService } from "./auth.services";
+import { registerService , loginService } from "./auth.services";
 
 
 async function registerController(req , res){
@@ -26,4 +26,4 @@ async function loginController(req , res){
     })
 }
 
-export {registerController}
+export {registerController , loginController}
