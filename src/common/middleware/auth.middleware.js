@@ -10,6 +10,7 @@ async function authMiddleware(req , res , next){
     try{
         const decoded = jwt.verify(ACCESS_TOKEN , process.env.ACCESS_TOKEN_KEY)
         req.user = decoded;
+        console.log(decoded)
         next()
     }
     catch(err){

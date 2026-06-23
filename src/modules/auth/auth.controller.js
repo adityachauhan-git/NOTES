@@ -22,6 +22,8 @@ async function loginController(req , res){
         httpOnly: true,
         maxAge:60*60*1000
     });
+
+    console.log(ACCESS_TOKEN)
     res.cookie("REFRESH_TOKEN" , REFRESH_TOKEN, {
         httpOnly: true,
         maxAge:7*24*60*60*1000
