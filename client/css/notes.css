@@ -306,3 +306,7 @@ main{
     text-decoration: none;
 
 }
+
+nav.hidden{
+    display: none;
+}

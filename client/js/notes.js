@@ -1,3 +1,5 @@
+const nav = document.getElementsByTagName("nav")
+
 const toggleLeft = document.getElementById("toggle-left")
 const toggleRight = document.getElementById("info-btn")
 const sidebar = document.getElementById("left-sidebar")
@@ -21,7 +23,12 @@ toggleRight.addEventListener("click" , ()=>{
 createNotebtn.addEventListener("click" , ()=>{
     noContent.classList.add("hidden");
     noteForm.classList.remove("hidden");
-    createNoteId()
+    detailsPannel.classList.add("hide-panel")
+    sidebar.classList.add("hide-panel")
+    // createNoteId()
+    document.documentElement.requestFullscreen()
+
+
 })
 
 const newNote = {
