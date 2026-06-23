@@ -14,6 +14,7 @@ async function registerController(req , res){
 
 async function loginController(req , res){
     const data = req.body
+
     const {ACCESS_TOKEN , REFRESH_TOKEN} = await loginService(data)
 
     if(ACCESS_TOKEN&&REFRESH_TOKEN){
@@ -28,7 +29,7 @@ async function loginController(req , res){
 
 
     return res.json({
-        message:"You are logged in",
+        message:"You are logged in"
     })
 }
     return res.json({

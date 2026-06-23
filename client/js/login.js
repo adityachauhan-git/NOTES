@@ -22,5 +22,7 @@ loginBtn.addEventListener("click" , async ()=>{
     }
     )
 
+    console.log(res)
+
 })
 
