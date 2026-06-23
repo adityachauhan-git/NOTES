@@ -18,7 +18,6 @@ async function authMiddleware(req , res , next){
             message:"Access Token denied"
         })
     }
-    
 }
 
 export {authMiddleware}

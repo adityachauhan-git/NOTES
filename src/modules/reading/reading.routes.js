@@ -2,7 +2,7 @@ import { Router } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 
-import { createNote , saveNote } from "./controllers.js";
+import { createNote , saveNote } from "./reading.controllers.js";
 
 const router = Router();
 
