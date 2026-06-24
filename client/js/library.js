@@ -3,6 +3,34 @@ const list = document.getElementById("book-list")
 const bookNameInput = document.getElementById("book-name-input")
 const addBookBtn = document.getElementById("book-detail-submit-btn")
 
+async function createBookList(books){
+    books.forEach((book)=>{
+        const bookElement = document.createElement("li")
+        const bookDelete = document.createElement("button")
+
+        const bookID = book.id
+
+        
+
+        bookDelete.textContent = "Remove"
+        bookElement.textContent = book.book_name
+
+
+        bookDelete.addEventListener("click" , async()=>{
+           const res = await fetch(`http://localhost:8080/books/deleteBook/${bookID}`,{
+            method:"DELETE",
+            credentials:"include"
+            })
+            list.removeChild(bookElement)
+        })
+    
+
+        list.appendChild(bookElement)
+        bookElement.appendChild(bookDelete)
+
+    })
+}
+
 async function getBooks(){
 
     const res = await fetch("http://localhost:8080/books/library" , {
@@ -14,11 +42,8 @@ async function getBooks(){
 
     const books = data.books
 
-    books.forEach((book)=>{
-        const bookElement = document.createElement("li")
-        bookElement.textContent = book.book_name
-        list.appendChild(bookElement)
-    })
+    createBookList(books)
+
 
 
     return data
@@ -37,12 +62,12 @@ addBookBtn.addEventListener("click" , async()=>{
         body:JSON.stringify(bookDetail)
     })
 
-    if(res.ok){
-        const book = bookDetail
-        const bookElement = document.createElement("li")
-        bookElement.textContent = book.bookName
-        list.appendChild(bookElement)
+    const data = await res.json()
 
+    const book = [data.book]
+    console.log(book)
+    if(res.ok){
+      createBookList(book)
     }
     
 })

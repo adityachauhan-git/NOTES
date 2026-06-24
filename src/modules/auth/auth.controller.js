@@ -17,8 +17,12 @@ async function loginController(req , res){
 
    
     const {ACCESS_TOKEN , REFRESH_TOKEN} = await loginService(data)
-       if(ACCESS_TOKEN!=null&&REFRESH_TOKEN!=null){
-    res.cookie("ACCESS_TOKEN", ACCESS_TOKEN, {
+       
+    
+    if(ACCESS_TOKEN!=null&&REFRESH_TOKEN!=null){
+    
+        res.cookie("ACCESS_TOKEN", ACCESS_TOKEN, {
+            
         httpOnly: true,
         sameSite:"none",
         maxAge:60*60*1000,

@@ -1,4 +1,4 @@
-import { libraryService,addBookService } from "./book.services.js"
+import { libraryService,addBookService, deleteBookService } from "./book.services.js"
 
 async function libraryController(req , res){
    
@@ -51,4 +51,34 @@ async function addBooksController(req , res){
     }
 }
 
-export {libraryController , addBooksController}
+async function deleteBookController(req , res){
+    const data = {
+        userID: req.user.userID,
+        bookID: req.params.id
+    }
+    try{
+    const isDeleted = await deleteBookService(data) 
+    if(isDeleted){
+        return res.status(200).json(
+           { message:"book deleted"}
+        )
+    }
+
+    return res.status(400).json({
+        message:"Not deleted"
+    })
+    
+    
+}
+catch(err){
+
+    console.log(err)
+
+    return res.status(400).json({
+        message:"Not deleted"
+    })
+}
+    
+}
+
+export {libraryController , addBooksController , deleteBookController}

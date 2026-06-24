@@ -20,7 +20,10 @@ loginBtn.addEventListener("click" , async ()=>{
         headers:{
             "content-type":"application/json"
         },
+        credentials:"include",
+        
         body:JSON.stringify(data)
+        
     }
     )
 if(res.ok){

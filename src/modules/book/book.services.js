@@ -21,4 +21,16 @@ async function addBookService(data){
     return bookname
 }
 
-export {libraryService , addBookService}
+async function deleteBookService(data){
+    const {userID , bookID} = data
+
+       const result =  await pool.query("DELETE FROM books WHERE user_id = $1 AND id = $2", [userID , bookID])
+       
+       if(result.rowCount===0){
+        return false
+       }
+       return true
+    
+}
+
+export {libraryService , addBookService, deleteBookService}
