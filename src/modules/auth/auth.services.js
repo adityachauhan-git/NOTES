@@ -40,7 +40,9 @@ if(!passCheack){
     }
 }
 
-const userID = await pool.query("SELECT id FROM users WHERE username = ($1)" , [userName])
+const userIDquery = await pool.query("SELECT id FROM users WHERE username = ($1)" , [userName])
+const userID = userIDquery.rows[0].id
+
 const ACCESS_TOKEN = jwt.sign({userID: userID,username:userName} , process.env.ACCESS_TOKEN_KEY , {expiresIn:'1h'})
 const REFRESH_TOKEN = jwt.sign({userID:userID ,username:userName} , process.env.REFRESH_TOKEN_KEY , {expiresIn:'7d'})
 

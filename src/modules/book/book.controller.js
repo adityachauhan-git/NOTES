@@ -6,30 +6,36 @@ async function libraryController(req , res){
     try{
     const books = await libraryService(userID)
 
+    
     return res.status(200).json({
         message:"Your books found!",
         books:books
     })
-    }
-    catch(err){
-        return res.status(404).json({
-            message:"Internal server error"
-        })
-    }
+}
+catch(err){
+
+    console.log(err)
+    return res.status(404).json({
+        message:"Internal server error"
+    })
+}
 }
 
 async function addBooksController(req , res){
-
+    
     const userID = req.user.userID
     const bookName = req.body.bookName
-
+    
     const data = {
         userID:userID,
         bookName:bookName
     }
 
+    console.log(data.bookName)
+    
     try{
-        const book = addBooksService(data)
+        const book = await addBookService(data)
+        console.log(book.book_name)
 
         res.status(201).json({
             message:"Book added!",
@@ -37,6 +43,8 @@ async function addBooksController(req , res){
         })
     }
     catch(err){
+
+        console.log(err)
         res.status(400).json({
             message:"Book not added"
         })
