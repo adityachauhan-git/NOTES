@@ -134,9 +134,14 @@ main{
 }
 
 
-.hide-panel {
-    width: 0;
-    overflow:hidden;
+#left-sidebar.hide-panel {
+    display:none;
+    overflow: hidden;
+}
+
+#right-sidebar.hide-panel{
+    display:none;
+    overflow: hidden;
 }
 
 .panel-btn{
@@ -333,3 +338,6 @@ nav.hidden{
     flex-direction: column;
 }
 
+.empty-note{
+    color:green
+}

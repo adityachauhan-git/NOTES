@@ -1,4 +1,4 @@
-import {createNoteService , saveNoteService , getNotesService}from "./reading.service.js"
+import {createNoteService , saveNoteService , getNotesService , getNoteService}from "./reading.service.js"
 
 async function getNotesController(req , res){
 
@@ -26,6 +26,32 @@ async function getNotesController(req , res){
     }
 
 }
+
+async function getNoteController(req , res){
+
+    const userID = req.user.userID
+    const noteID = req.params.noteID
+
+    const data = {
+        userID:userID,
+        noteID:noteID
+    }
+
+    try{
+        const result = await getNoteService(data)
+        return res.status(200).json({
+            message:"Note Found",
+            data: result
+        })
+    }
+    catch(err){
+        console.log(err)
+        return res.status(400).json({
+            message:"Note not found"
+        })
+    }
+
+}
 const createNote = async (req ,res)=>{
     
     const userID = req.user.userID
@@ -48,7 +74,7 @@ const createNote = async (req ,res)=>{
     )
 }
 
-const saveNote = async(req , res)=>{
+const saveNoteControllers = async(req , res)=>{
     const data = req.body
 
     const result = saveNoteService(data)
@@ -59,4 +85,6 @@ const saveNote = async(req , res)=>{
 }
 
 
-export {createNote , saveNote , getNotesController}
+
+
+export {createNote , saveNoteControllers , getNotesController , getNoteController}

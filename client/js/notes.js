@@ -26,17 +26,29 @@ toggleRight.addEventListener("click" , ()=>{
     detailsPannel.classList.toggle("hide-panel")
 })
 
-createNotebtn.addEventListener("click" , ()=>{
+function openNoteEditor(title , content){
+
     noContent.classList.add("hidden");
     noteForm.classList.remove("hidden");
+    
+
+    noteTitle.value = title
+    noteContent.value = content
+}
+
+createNotebtn.addEventListener("click" , ()=>{
+    openNoteEditor("" , "")
     detailsPannel.classList.add("hide-panel")
     sidebar.classList.add("hide-panel")
     createNoteId()
     document.documentElement.requestFullscreen()
+    createNoteList()
 
 
 })
 
+
+   
 async function getNotes(){
     const params = new URLSearchParams(window.location.search)
     
@@ -50,18 +62,38 @@ async function getNotes(){
 }
 
 async function createNoteList(){
+
+    notesList.replaceChildren()
+
     const notes = await getNotes()
     console.log(notes)
     const notesArr = notes.notes
-    let noteNum = 1;
+
     notesArr.forEach((note)=>{
         const list = document.createElement("li")
 
+        list.addEventListener("click" , async()=>{
+            const res = await fetch(`http://localhost:8080/notes/getNote/${note.id}` , {
+                method:"GET",
+                credentials:"include"
+            })
+
+            const result = await res.json()
+
+            const title = result.data.title
+            const content = result.data.content
+            openNoteEditor(title , content)
+
+
+
+        })
         
         if(note.title===""){
-        list.textContent = `Note${noteNum}`
+        list.textContent = `empty note`
+        list.classList.add("empty-note")
         notesList.appendChild(list)
-        noteNum++
+        
+       
         return
         }
 
