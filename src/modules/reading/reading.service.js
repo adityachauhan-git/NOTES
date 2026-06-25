@@ -1,4 +1,13 @@
     import { pool } from "../../common/config/db.js"
+
+    async function getNotesService(data){
+
+        const {userID , bookID} = data
+        
+        const result = await pool.query("SELECT id FROM notes WHERE user_id = $1 AND book_id = $2" , [userID , bookID])
+        const notes = result.rows
+        return notes
+    }
     
     const createNoteService = async (data)=>{
 
@@ -22,4 +31,4 @@
 
 
 
-    export {createNoteService , saveNoteService}
+    export {createNoteService , saveNoteService , getNotesService}

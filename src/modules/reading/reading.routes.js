@@ -2,11 +2,15 @@ import { Router } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 
-import { createNote , saveNote } from "./reading.controllers.js";
+import {authMiddleware} from "../../common/middleware/auth.middleware.js"
+
+import { createNote , getNotesController, saveNote } from "./reading.controllers.js";
 
 const router = Router();
 
-router.post("/createNote" , createNote)
+
+router.get("/getNotes/:bookID" , authMiddleware , getNotesController)
+router.post("/createNote/:bookID" ,authMiddleware, createNote)
 
 router.put("/saveNote" , saveNote)
 
