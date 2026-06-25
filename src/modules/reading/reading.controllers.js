@@ -27,13 +27,10 @@ async function getNotesController(req , res){
 }
 const createNote = async (req ,res)=>{
     
-    const {title , content} = req.body;
     const userID = req.user.userID
     const bookID = req.params.bookID
 
     const data = {
-        title:title,
-        content:content,
         userID:userID,
         bookID:bookID
     }
