@@ -6,6 +6,7 @@ const addBookBtn = document.getElementById("book-detail-submit-btn")
 async function createBookList(books){
     books.forEach((book)=>{
         const bookElement = document.createElement("li")
+        const bookLink = document.createElement("a")
         const bookDelete = document.createElement("button")
 
         const bookID = book.id
@@ -13,7 +14,8 @@ async function createBookList(books){
         
 
         bookDelete.textContent = "Remove"
-        bookElement.textContent = book.book_name
+        bookLink.textContent = book.book_name
+        bookLink.href = `http://127.0.0.1:5501/client/notes.html?bookID=${bookID}`
 
 
         bookDelete.addEventListener("click" , async()=>{
@@ -26,10 +28,14 @@ async function createBookList(books){
     
 
         list.appendChild(bookElement)
+        bookElement.appendChild(bookLink)
         bookElement.appendChild(bookDelete)
+        
 
     })
 }
+
+
 
 async function getBooks(){
 
@@ -51,6 +57,8 @@ async function getBooks(){
 
 window.addEventListener("DOMContentLoaded" , async()=>{
    const res = await getBooks()
+
+   
 })
 
 addBookBtn.addEventListener("click" , async()=>{

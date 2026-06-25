@@ -82,15 +82,20 @@ main{
     color: white;
     background-color: var(--primary-color);
     height: min(90vh);
-    width: 25vw;
+    
     padding-top: 3vh;
+    flex: 1;
     transition: width 0.3s ease;
     
     
 }
 
-.notes-list-col p{
-    margin:0 0 0 20vh;
+
+
+.notes-list-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .note{
@@ -98,7 +103,7 @@ main{
     color: white;
     background-color: var(--primary-color);
     height: 90vh;
-    flex: 1;
+    flex: 2;
     padding-top: 3vh;
 }
 
@@ -115,7 +120,7 @@ main{
     color: white;
     background-color: var(--primary-color);
     height: 90vh;
-    width: 25vw;
+    flex:1;
     padding-top: 3vh;
     transition: width 0.3s ease;
 }

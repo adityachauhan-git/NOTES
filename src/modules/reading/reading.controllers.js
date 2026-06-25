@@ -11,9 +11,10 @@ async function getNotesController(req , res){
     }
     try{
         const result = await getNotesService(data)
-
+        console.log("This are notes after service:" , result)
         return res.status(200).json({
             notes: result
+            
         })
 
     }

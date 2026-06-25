@@ -9,8 +9,14 @@ const createNotebtn = document.getElementById("create-note")
 const noContent = document.getElementById("no-content")
 const noteForm = document.getElementById("note-form")
 
+const notesList = document.querySelector(".notes-list")
+
 const noteTitle = document.getElementById("note-title")
 const noteContent = document.getElementById("note-content")
+
+window.addEventListener("DOMContentLoaded" , ()=>{
+    createNoteList()
+})
 
 toggleLeft.addEventListener("click" ,()=>{
     sidebar.classList.toggle("hide-panel")
@@ -31,9 +37,41 @@ createNotebtn.addEventListener("click" , ()=>{
 
 })
 
-const newNote = {
-    title:"",
-    content:""
+async function getNotes(){
+    const params = new URLSearchParams(window.location.search)
+    
+    const bookID = params.get("bookID")
+
+    const result = await fetch(`http://localhost:8080/notes/getNotes/${bookID}` , {
+        method:"GET",
+        credentials:"include"
+    })
+    return result.json()
+}
+
+async function createNoteList(){
+    const notes = await getNotes()
+    console.log(notes)
+    const notesArr = notes.notes
+    let noteNum = 1;
+    notesArr.forEach((note)=>{
+        const list = document.createElement("li")
+
+        
+        if(note.title===""){
+        list.textContent = `Note${noteNum}`
+        notesList.appendChild(list)
+        noteNum++
+        return
+        }
+
+        else{
+            list.textContent = note.title
+            notesList.appendChild(list)
+        }
+    })
+
+ 
 }
 
 let timer
@@ -41,12 +79,14 @@ let timer
 let currentNoteId = null;
 
 const createNoteId= async()=>{
-    const res = await fetch("http://localhost:8080/notes/createNote" , {
+
+    const params = new URLSearchParams(window.location.search)
+    const bookID =  params.get("bookID")
+
+    const res = await fetch(`http://localhost:8080/notes/createNote/${bookID}` , {
         method:"POST",
-        headers:{
-            "Content-Type": "application/json"
-        },
-        body:JSON.stringify(newNote)
+        
+        credentials:"include",
 
     })
 

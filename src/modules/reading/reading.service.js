@@ -4,7 +4,8 @@
 
         const {userID , bookID} = data
         
-        const result = await pool.query("SELECT id FROM notes WHERE user_id = $1 AND book_id = $2" , [userID , bookID])
+        const result = await pool.query("SELECT * FROM notes WHERE user_id = $1 AND book_id = $2" , [userID , bookID])
+        console.log(result)
         const notes = result.rows
         return notes
     }
