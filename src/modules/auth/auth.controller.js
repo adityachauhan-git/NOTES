@@ -1,4 +1,4 @@
-import { registerService , loginService } from "./auth.services.js";
+import { registerService , loginService , refreshTokenService} from "./auth.services.js";
 
 
 async function registerController(req , res){
@@ -26,7 +26,7 @@ async function loginController(req , res){
         httpOnly: true,
         sameSite:"none",
         maxAge:60*60*1000,
-        secure: true,
+        secure: true
       
     });
 
@@ -34,7 +34,7 @@ async function loginController(req , res){
         httpOnly: true,
         sameSite:"none",
         maxAge:7*24*60*60*1000,
-        secure: true,
+        secure: true
         
     });
 
@@ -52,6 +52,31 @@ async function loginController(req , res){
 
     }
     
+async function refreshTokenController(req , res){
 
+    if(!req.cookies.REFRESH_TOKEN){
+        return res.status(400).json(
+            {
+                message:"no refreash token"
+            }
+        )
+    }
 
-export {registerController , loginController}
+    const result = await refreshTokenService(req.cookies.REFRESH_TOKEN)
+
+    res.cookie("ACCESS_TOKEN" , result , {
+        httpOnly: true,
+        sameSite:"none",
+        maxAge:60*60*1000,
+        secure: true
+    })
+
+    return res.status(200).json(
+        {
+            message:"access token regenerated!"
+        }
+    )
+
+}
+
+export {registerController , loginController , refreshTokenController}

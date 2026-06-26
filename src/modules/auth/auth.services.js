@@ -59,4 +59,21 @@ return {ACCESS_TOKEN:ACCESS_TOKEN , REFRESH_TOKEN:REFRESH_TOKEN}
 
 }
 
-export {registerService , loginService}
+async function refreshTokenService(REFRESH_TOKEN){
+
+    const payload = await jwt.verify(REFRESH_TOKEN , process.env.REFRESH_TOKEN_KEY)
+
+    const ACCESS_TOKEN = await jwt.sign(
+        {
+            userID: payload.userID,
+            username:payload.userName
+    },
+    process.env.ACCESS_TOKEN_KEY,
+    {expiresIn:"1h"}
+)
+
+    return ACCESS_TOKEN
+
+}
+
+export {registerService , loginService, refreshTokenService}
