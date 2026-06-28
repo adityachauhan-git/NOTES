@@ -1,4 +1,4 @@
-import apifetch from "./apifetch.js"
+import apifetch from "./common-functions.js"
 
 const list = document.getElementById("book-list")
 

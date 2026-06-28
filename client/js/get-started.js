@@ -1,4 +1,4 @@
-import apifetch from "./apifetch.js"
+import apifetch from "./common-functions.js"
 
 const usernameInput = document.querySelector(".username")
 const passwordInput = document.querySelector(".password")
@@ -6,7 +6,12 @@ const passwordInput = document.querySelector(".password")
 const registerBtn = document.querySelector(".register-btn")
 
 
+
+
 registerBtn.addEventListener("click" , async ()=>{
+
+    console.log("[get-started.js] Register button clicked.")
+
     const username = usernameInput.value
     const password = passwordInput.value
 
@@ -14,6 +19,8 @@ registerBtn.addEventListener("click" , async ()=>{
         userName:username,
         pass:password
     }
+
+    console.log("[get-started.js] data that is sent to the server:" , data)
 
     
     const options = {
@@ -25,6 +32,8 @@ registerBtn.addEventListener("click" , async ()=>{
     }
     
     const res = await apifetch("http://localhost:8080/auth/register" , options)
+
+    
 
     console.log(res)
 

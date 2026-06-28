@@ -28,4 +28,8 @@ async function apifetch(url , options){
     }
 }
 
+function logStep(){
+    
+}
+
 export default apifetch
