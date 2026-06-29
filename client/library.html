@@ -4,27 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <link rel="stylesheet" href="./css/notes.css">
+    <link rel="stylesheet" href="./css/library.css">
 </head>
 <body>
     <div class="library-whole">
-    <nav>
+    <nav class="library-nav">
         <h1>bookNote</h1>
         <form action="">
             <input type="text">
         </form>
        
-        <button id="book-detail-submit-btn">Add Book</button>
     </nav>
     <aside class="hidden">
         <p>UserName</p>
-
+        
     </aside>
     <main class="library">
-    <h1>Your Books</h1>
-    <ul id="book-list">
-    </ul>
-    <input id="book-name-input" placeholder="Enter your book name" type="text" autocomplete="off">
+        <h1>Your Books</h1>
+        <ul id="book-list">
+        </ul>
+        <div class="add-book-section">
+        <input id="book-name-input" placeholder="Enter your book name" type="text" autocomplete="off">
+        <button id="book-detail-submit-btn">Add Book</button>
+        </div>
     </main>
     </div>
 

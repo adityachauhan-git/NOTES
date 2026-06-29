@@ -331,15 +331,3 @@ nav.hidden{
 }
 
 
-.library{
-    display: flex;
-    flex-direction: column;
-}
-
-.empty-note{
-    color:green
-}
-
-.hidden{
-    display: none;
-}

@@ -11,11 +11,11 @@ async function createBookList(books){
         const bookLink = document.createElement("a")
         const bookDelete = document.createElement("button")
 
+
         const bookID = book.id
 
-        
 
-        bookDelete.textContent = "Remove"
+        bookDelete.textContent = "Delete"
         bookLink.textContent = book.book_name
         bookLink.href = `http://127.0.0.1:5500/client/notes.html?bookID=${bookID}`
 
@@ -38,8 +38,6 @@ async function createBookList(books){
 
     })
 }
-
-
 
 async function getBooks(){
 
@@ -76,13 +74,12 @@ addBookBtn.addEventListener("click" , async()=>{
         body:JSON.stringify(bookDetail)
     })
 
-    const data = await res.json()
-
+    const data = await res
+    console.log(data)
     const book = [data.book]
     console.log(book)
-    if(res.ok){
       createBookList(book)
-    }
+   
     
 })
 
