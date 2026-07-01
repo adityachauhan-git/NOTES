@@ -6,6 +6,7 @@ const toggleLeft = document.getElementById("toggle-left")
 const toggleRight = document.getElementById("info-btn")
 const sidebar = document.getElementById("left-sidebar")
 const detailsPannel = document.getElementById("right-sidebar")
+const details = document.getElementById("details")
 
 const createNotebtn = document.getElementById("create-note")
 const noContent = document.getElementById("no-content")
@@ -83,6 +84,15 @@ async function createNoteList(){
                 method:"GET",
                 credentials:"include"
             })
+
+            console.log(res)
+
+            const params= new URLSearchParams(window.location.search)
+            const bookID = params.get('bookID')
+
+            const bookData = await apifetch(`http://localhost:8080/books/book/${bookID}`)
+            console.log(bookData)
+            noteDetail(res , bookData)
 
             const result = await res
 
@@ -176,3 +186,14 @@ async function autoSave(data){
         createNoteList()
     },1000);
 }
+
+async function noteDetail(data , book){
+
+   
+
+    const createdAtDate = data.data.created_at.split('T')[0]
+
+    details.textContent = `For Book:${book.data.book_name}, title: ${data.data.title}, Created on:${createdAtDate}`
+ 
+}
+

@@ -1,4 +1,4 @@
-import { libraryService,addBookService, deleteBookService } from "./book.services.js"
+import { libraryService,addBookService, deleteBookService , getBookService } from "./book.services.js"
 
 async function libraryController(req , res){
    
@@ -81,4 +81,17 @@ catch(err){
     
 }
 
-export {libraryController , addBooksController , deleteBookController}
+async function getBookController(req , res){
+     const data = {
+        bookID:req.params,
+        userID:req.user.userID
+    }
+
+    const bookData = await getBookService(data)
+
+    return res.status(200).json({
+        data:bookData
+    })
+}
+
+export {libraryController , addBooksController , deleteBookController , getBookController}

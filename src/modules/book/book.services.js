@@ -33,4 +33,14 @@ async function deleteBookService(data){
     
 }
 
-export {libraryService , addBookService, deleteBookService}
+async function getBookService(data){
+   const userID = data.userID
+   const bookID = Number(data.bookID.id)
+
+   const res = await pool.query("SELECT * FROM books WHERE user_id = $1 AND id = $2" , [userID , bookID])
+    
+   return res.rows[0]
+}   
+
+
+export {libraryService , addBookService, deleteBookService , getBookService}

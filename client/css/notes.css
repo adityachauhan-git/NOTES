@@ -330,4 +330,8 @@ nav.hidden{
     display:none;
 }
 
-
+#right-sidebar{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

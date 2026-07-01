@@ -15,7 +15,7 @@ async function registerController(req , res){
 async function loginController(req , res){
     const data = req.body
 
-   
+   try{
     const {ACCESS_TOKEN , REFRESH_TOKEN} = await loginService(data)
        
     
@@ -47,6 +47,10 @@ async function loginController(req , res){
         return res.status(403).json({
         message:"Login failed!"
     })
+    }}
+
+    catch(err){
+        console.log(err)
     }
 
 
