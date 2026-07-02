@@ -6,7 +6,9 @@ const toggleLeft = document.getElementById("toggle-left")
 const toggleRight = document.getElementById("info-btn")
 const sidebar = document.getElementById("left-sidebar")
 const detailsPannel = document.getElementById("right-sidebar")
-const details = document.getElementById("details")
+const bookDetails = document.getElementById("book-details")
+const titleDetails = document.getElementById("title-details")
+const dateDetails = document.getElementById("date-details")
 
 const createNotebtn = document.getElementById("create-note")
 const noContent = document.getElementById("no-content")
@@ -193,7 +195,8 @@ async function noteDetail(data , book){
 
     const createdAtDate = data.data.created_at.split('T')[0]
 
-    details.textContent = `For Book:${book.data.book_name}, title: ${data.data.title}, Created on:${createdAtDate}`
- 
+    bookDetails.textContent = `For Book:${book.data.book_name}`
+    titleDetails.textContent = `title: ${data.data.title}`
+    dateDetails.textContent = `Created on:${createdAtDate}`
 }
 
