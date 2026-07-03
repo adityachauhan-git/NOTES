@@ -3,9 +3,10 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import {authMiddleware} from "../../common/middleware/auth.middleware.js"
+import { validate } from "../../common/middleware/validate.js";
 
 import { createNote , getNoteController, getNotesController, saveNoteControllers } from "./reading.controllers.js";
-
+import noteSchema from "./reading.schema.js";
 
 const router = Router();
 
@@ -13,6 +14,6 @@ const router = Router();
 router.get("/getNotes/:bookID" , authMiddleware , getNotesController)
 router.get("/getNote/:noteID", authMiddleware , getNoteController) 
 router.post("/createNote/:bookID" ,authMiddleware, createNote)
-router.put("/saveNote" ,authMiddleware, saveNoteControllers)
+router.put("/saveNote" ,authMiddleware, validate(noteSchema) ,saveNoteControllers)
 
 export default router;
