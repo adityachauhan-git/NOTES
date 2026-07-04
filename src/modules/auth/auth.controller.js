@@ -19,6 +19,10 @@ async function registerController(req , res){
 catch(err){
     console.log("something went wrong with the register service.")
     console.log("Data recieved by the controller: " , data)
+
+    res.status(500).json({
+        message:"Internal Server error"
+    })
 }
 
 }
@@ -67,7 +71,12 @@ async function loginController(req , res){
     }}
 
     catch(err){
-        console.log("Login service failed!")
+        console.log("Login service failed!" , err);
+
+        return res.status(500).json({
+            message: "Internal Server Error!"
+        })
+
     }
 
 
@@ -77,29 +86,46 @@ async function refreshTokenController(req , res){
 
     if(!req.cookies.REFRESH_TOKEN){
 
-        
+        console.log("There is no refresh token in the cookies sent to refreashToken Controller")
 
         return res.status(400).json(
             {
-                message:"no refreash token"
+                message:"no refresh token"
             }
         )
     }
 
-    const result = await refreshTokenService(req.cookies.REFRESH_TOKEN)
+    try{
+        const result = await refreshTokenService(req.cookies.REFRESH_TOKEN)
 
-    res.cookie("ACCESS_TOKEN" , result , {
-        httpOnly: true,
-        sameSite:"none",
-        maxAge:60*60*1000,
-        secure: true
-    })
+        console.log("refreshToken service successfully generated the access token.")
+        console.log("New Access Token: " , ACCESS_TOKEN)
 
-    return res.status(200).json(
-        {
-            message:"access token regenerated!"
-        }
-    )
+     res.cookie("ACCESS_TOKEN" , result , {
+            httpOnly: true,
+            sameSite:"none",
+            maxAge:60*60*1000,
+            secure: true
+        })
+
+        return res.status(200).json(
+            {
+                message:"access token regenerated!"
+            }
+        )
+    }
+    catch(err){
+        
+        console.log("refreshToken Service failed!")
+        console.log("Error: " , err)
+
+        return res.status(500).json(
+            {
+                message: "Internal server error"
+            }
+        )
+
+    }
 
 }
 
