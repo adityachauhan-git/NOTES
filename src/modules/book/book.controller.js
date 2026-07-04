@@ -4,21 +4,24 @@ async function libraryController(req , res){
    
     const userID = req.user.userID
     try{
-    const books = await libraryService(userID)
+        const books = await libraryService(userID)
 
+        console.log("library service successful!")
+        console.log("Sending books : " , books)
     
-    return res.status(200).json({
-        message:"Your books found!",
-        books:books
-    })
-}
-catch(err){
+        return res.status(200).json({
+            message:"Your books found!",
+            books:books
+        })
+    }
+    catch(err){
 
-    console.log(err)
-    return res.status(404).json({
-        message:"Internal server error"
-    })
-}
+        console.log("LIbrary Service Failed!")
+        console.log("Error: " , err)
+        return res.status(500).json({
+            message:"Internal server error"
+        })
+    }
 }
 
 async function addBooksController(req , res){
@@ -31,11 +34,12 @@ async function addBooksController(req , res){
         bookName:bookName
     }
 
-    console.log(data.bookName)
+
     
     try{
         const book = await addBookService(data)
-        console.log(book.book_name)
+        console.log("addBookService successfull!")
+        console.log("Added Book: " , book)
 
         res.status(201).json({
             message:"Book added!",
@@ -43,10 +47,10 @@ async function addBooksController(req , res){
         })
     }
     catch(err){
-
+        console.log("addBookController has some problem!")
         console.log(err)
-        res.status(400).json({
-            message:"Book not added"
+        res.status(500).json({
+            message:"Book not added! Internal Server error"
         })
     }
 }
