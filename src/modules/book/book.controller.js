@@ -62,11 +62,19 @@ async function deleteBookController(req , res){
     }
     try{
     const isDeleted = await deleteBookService(data) 
+
+    console.log("deleteBookService successfull!")
+    console.log("Is deleted: ",  isDeleted)
+
     if(isDeleted){
+
+        console.log("Your Book was deleted!")
         return res.status(200).json(
            { message:"book deleted"}
         )
     }
+
+    console.log("Book not deleted! but service ran without errors")
 
     return res.status(400).json({
         message:"Not deleted"
@@ -76,6 +84,7 @@ async function deleteBookController(req , res){
 }
 catch(err){
 
+    console.log("Something went wrong with deleteBookService!")
     console.log(err)
 
     return res.status(400).json({
