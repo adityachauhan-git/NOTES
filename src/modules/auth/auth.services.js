@@ -17,9 +17,17 @@ async function registerService(data){
     
     const hashedPass = await hashPassword(pass);
 
+    console.log("Hashed Password : " , hashedPass)
+
     const user = await pool.query("INSERT INTO users(username , hashed_password) VALUES ($1 , $2) RETURNING *", [userName , hashedPass])
 
+    console.log("user recieved from the pool query: " , user )
+
     const userID = user.rows[0].id
+
+    console.log("userId that is sent from the service: " , userID)
+
+
      
     return userID 
 }

@@ -12,8 +12,6 @@ async function addBookService(data){
   
     const {userID , bookName} = data
 
-    console.log(userID)
-
     const book = await pool.query("INSERT INTO books(user_id , book_name) VALUES($1 ,$2) RETURNING id ,book_name" , [userID , bookName])
 
     const bookname = book.rows[0]

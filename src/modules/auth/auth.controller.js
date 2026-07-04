@@ -19,6 +19,7 @@ async function registerController(req , res){
 catch(err){
     console.log("something went wrong with the register service.")
     console.log("Data recieved by the controller: " , data)
+    console.log("Errors: " , err)
 
     res.status(500).json({
         message:"Internal Server error"
