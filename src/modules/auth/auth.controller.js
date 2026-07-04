@@ -4,7 +4,11 @@ import { registerService , loginService , refreshTokenService} from "./auth.serv
 async function registerController(req , res){
     const data = req.body;
 
+    try{
     const id = await registerService(data)
+    
+    console.log("register service has no errors!")
+    console.log("this is the data sending back to client: id: " , id)
 
    return res.json({
         message:"User created",
@@ -12,45 +16,58 @@ async function registerController(req , res){
     })
 }
 
+catch(err){
+    console.log("something went wrong with the register service.")
+    console.log("Data recieved by the controller: " , data)
+}
+
+}
+
 async function loginController(req , res){
     const data = req.body
 
    try{
     const {ACCESS_TOKEN , REFRESH_TOKEN} = await loginService(data)
-       
+    
+
     
     if(ACCESS_TOKEN!=null&&REFRESH_TOKEN!=null){
-    
+
+        console.log("Tokens recieved by the login controller from the login service")
+        console.log("The tokens are:")
+        console.log("Access Token: ", ACCESS_TOKEN)
+        console.log("Refresh Token: ", REFRESH_TOKEN)
         res.cookie("ACCESS_TOKEN", ACCESS_TOKEN, {
             
-        httpOnly: true,
-        sameSite:"none",
-        maxAge:60*60*1000,
-        secure: true
+            httpOnly: true,
+            sameSite:"none",
+            maxAge:60*60*1000,
+            secure: true
       
-    });
+        });
 
-    res.cookie("REFRESH_TOKEN" , REFRESH_TOKEN, {
-        httpOnly: true,
-        sameSite:"none",
-        maxAge:7*24*60*60*1000,
-        secure: true
+        res.cookie("REFRESH_TOKEN" , REFRESH_TOKEN, {
+            httpOnly: true,
+            sameSite:"none",
+            maxAge:7*24*60*60*1000,
+            secure: true
         
-    });
+        });
 
-    return res.json({
-        message:"You are logged in"
-    })
-       }
+        return res.json({
+            message:"You are logged in"
+        })
+    }
+
     else{
-        console.log("Wrong password")
+        console.log("Tokens not recieved by the login controller from the login service!")
         return res.status(403).json({
-        message:"Login failed!"
-    })
+            message:"Login failed!"
+        })
     }}
 
     catch(err){
-        console.log(err)
+        console.log("Login service failed!")
     }
 
 
@@ -59,6 +76,9 @@ async function loginController(req , res){
 async function refreshTokenController(req , res){
 
     if(!req.cookies.REFRESH_TOKEN){
+
+        
+
         return res.status(400).json(
             {
                 message:"no refreash token"
