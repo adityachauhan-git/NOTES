@@ -11,7 +11,8 @@ async function getNotesController(req , res){
     }
     try{
         const result = await getNotesService(data)
-        
+        console.log("getNoteService successfull!")
+        console.log("sending note: " , result)
         return res.status(200).json({
             notes: result
             
@@ -19,7 +20,8 @@ async function getNotesController(req , res){
 
     }
     catch(err){
-        console.log(err)
+        console.log("getNoteService Failed!")
+        console.log("Error: " , err)
         res.status(400).json({
             message:"Internal Server error"
         })
