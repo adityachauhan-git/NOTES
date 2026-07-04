@@ -95,16 +95,27 @@ catch(err){
 }
 
 async function getBookController(req , res){
-     const data = {
+    const data = {
         bookID:req.params,
         userID:req.user.userID
     }
+    try{
+        const bookData = await getBookService(data)
+        console.log("getBookService Successfull")
+        console.log("bookData: ", bookData)
+        return res.status(200).json({
+            data:bookData
+        })
+    }
+    catch(err){
+        console.log("getBookService failed!")
+        console.log(err)
 
-    const bookData = await getBookService(data)
+        return res.status(500).json({
+            message:"Internal server error"
+        })
 
-    return res.status(200).json({
-        data:bookData
-    })
+    }
 }
 
 export {libraryController , addBooksController , deleteBookController , getBookController}
