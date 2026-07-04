@@ -99,7 +99,7 @@ async function refreshTokenController(req , res){
         const result = await refreshTokenService(req.cookies.REFRESH_TOKEN)
 
         console.log("refreshToken service successfully generated the access token.")
-        console.log("New Access Token: " , ACCESS_TOKEN)
+        console.log("New Access Token: " , result)
 
      res.cookie("ACCESS_TOKEN" , result , {
             httpOnly: true,
