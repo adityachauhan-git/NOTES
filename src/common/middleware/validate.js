@@ -4,7 +4,8 @@ export const validate = (schema) => (req, res, next) => {
   if (!result.success) {
     return res.status(400).json(result.error.issues);
   }
-
+  console.log("data validated by the schema")
   req.body = result.data;
+  console.log(req.body)
   next();
 };

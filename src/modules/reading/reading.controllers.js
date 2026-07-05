@@ -14,11 +14,15 @@ async function getNotesController(req , res){
 
     }
 
-    const data = {
+    
+    try{
+
+        const data = {
         userID:userID,
         bookID:bookID
-    }
-    try{
+        }
+
+        
         const result = await getNotesService(data)
         console.log("getNotesService successfull!")
         console.log("sending notes: " , result)
@@ -108,9 +112,11 @@ const createNote = async (req ,res)=>{
 }
 
 const saveNoteControllers = async(req , res)=>{
+    
     const data = req.body
-
     try{
+
+        
         const result = saveNoteService(data)
         
         console.log("saveNoteService successfull!")
