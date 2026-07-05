@@ -81,7 +81,7 @@ async function loginController(req , res){
     }
 
 
-    }
+}
     
 async function refreshTokenController(req , res){
 

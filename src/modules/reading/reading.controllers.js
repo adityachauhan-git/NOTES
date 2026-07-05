@@ -75,8 +75,7 @@ async function getNoteController(req , res){
 
 }
 
-
-const createNote = async (req ,res)=>{
+async function createNote (req ,res){
     
     const userID = req.user.userID
     const bookID = req.params.bookID
@@ -111,7 +110,7 @@ const createNote = async (req ,res)=>{
     }
 }
 
-const saveNoteControllers = async(req , res)=>{
+async function saveNoteControllers(req , res){
     
     const data = req.body
     try{

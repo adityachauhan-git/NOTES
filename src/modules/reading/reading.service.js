@@ -21,7 +21,7 @@
 
     }
 
-    const createNoteService = async (data)=>{
+    async function createNoteService(data){
 
         const {userID , bookID} = data
 
@@ -39,7 +39,7 @@
 
     }
 
-    const saveNoteService = async(data)=>{
+    async function saveNoteService(data){
         const {noteID , title , content} = data
 
         const result = await pool.query("UPDATE notes SET title = $1 ,content =$2 WHERE id = $3" , [title , content , noteID])
