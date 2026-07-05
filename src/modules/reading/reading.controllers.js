@@ -5,6 +5,15 @@ async function getNotesController(req , res){
     const userID = req.user.userID
     const bookID = req.params.bookID
 
+    if(bookID==="null"){
+
+        console.log("There is no bookID id provided")
+        return res.status(400).json({
+            message:"Book ID not provided."
+        })
+
+    }
+
     const data = {
         userID:userID,
         bookID:bookID

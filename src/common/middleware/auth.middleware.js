@@ -14,6 +14,7 @@ async function authMiddleware(req , res , next){
         next()
     }
     catch(err){
+        console.log("Something went wrong in auth Middleware. Most likely no token.")
         console.log(err)
         return res.status(403).json({
             message:"Access Token denied"

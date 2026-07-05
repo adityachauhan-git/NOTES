@@ -12,7 +12,7 @@
     
     async function getNoteService(data){
         const {userID , noteID} = data
-
+        
         const result = await pool.query("SELECT * FROM notes WHERE user_id = $1 AND id = $2" , [userID , noteID])
        console.log("service")
         return result.rows[0]
