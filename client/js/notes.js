@@ -2,6 +2,8 @@ import apifetch from "./common-functions.js"
 
 const nav = document.getElementsByTagName("nav")
 
+const libraryBtn = document.getElementById("library")
+
 const toggleLeft = document.getElementById("toggle-left")
 const toggleRight = document.getElementById("info-btn")
 const sidebar = document.getElementById("left-sidebar")
@@ -176,7 +178,7 @@ async function autoSave(data){
     clearTimeout(timer);
     
     timer = setTimeout(async() =>{
-        console.log("Title Saved!");
+        
         const res = await apifetch("http://localhost:8080/notes/saveNote" , {
             method:"PUT",
             headers:{
@@ -199,4 +201,8 @@ async function noteDetail(data , book){
     titleDetails.textContent = `title: ${data.data.title}`
     dateDetails.textContent = `Created on:${createdAtDate}`
 }
+
+libraryBtn.addEventListener("click" ,()=>{
+    window.location.href='library.html'
+})
 
