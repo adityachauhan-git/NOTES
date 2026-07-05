@@ -61,6 +61,8 @@ async function getNoteController(req , res){
     }
 
 }
+
+
 const createNote = async (req ,res)=>{
     
     const userID = req.user.userID
@@ -71,16 +73,29 @@ const createNote = async (req ,res)=>{
         bookID:bookID
     }
 
-    const result = await createNoteService(data)
+    try{
+        const result = await createNoteService(data)
 
-    console.log("This is the first row of the returning value : " , result)
+        console.log("createNoteService  is successfull")
+        console.log("The data sent is: " , result)
     
-    res.status(201).json(
-        {
-            message:"Notes Created",
-            data:result
-        }
-    )
+        res.status(201).json(
+            {
+                message:"Notes Created",
+                data:result
+            }
+        )
+    }
+
+
+    catch(err){
+        console.log("createNoteService failed!")
+        console.log("Error: " , err)
+
+        res.status(500).json({
+            message:"Internal Server Error"
+        })
+    }
 }
 
 const saveNoteControllers = async(req , res)=>{
