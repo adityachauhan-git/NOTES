@@ -42,7 +42,8 @@ async function getNoteController(req , res){
     try{
         const result = await getNoteService(data)
 
-        console.log("")
+        console.log("getNoteService(single note) successfull")
+        console.log("sending note: " , result)
 
         return res.status(200).json({
             message:"Note Found",
@@ -50,7 +51,10 @@ async function getNoteController(req , res){
         })
     }
     catch(err){
-        console.log(err)
+        
+        console.log("getNoteService failed!")
+        console.log("Error: " , err)
+
         return res.status(400).json({
             message:"Note not found"
         })
