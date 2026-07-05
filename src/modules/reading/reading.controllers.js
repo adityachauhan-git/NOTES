@@ -101,14 +101,21 @@ const createNote = async (req ,res)=>{
 const saveNoteControllers = async(req , res)=>{
     const data = req.body
 
-    const result = saveNoteService(data)
     try{
-    res.status(200).json({
-        message:"Successfully saved"
-    })
+        const result = saveNoteService(data)
+        
+        console.log("saveNoteService successfull!")
+
+        res.status(200).json({
+            message:"Successfully saved"
+        })
     }
     catch(err){
-        res.status(400).json({
+
+        console.log("saveNoteService Failed")
+        console.log("Error: " , err)
+
+        res.status(500).json({
             message:"Autosave unsuccessfull"
         })
     }
