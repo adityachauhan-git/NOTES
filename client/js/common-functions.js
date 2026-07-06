@@ -13,14 +13,15 @@ async function apifetch(url , options){
             {
                 method:"GET", 
                 credentials:"include"
-        }
-    )
+            }
+        )
 
         if(result.ok){
             const result = await fetch(url ,{ 
             credentials:"include",
             ...options
             })
+            location.reload()
         }
         else{
             window.location.href = "./login.html"; 
@@ -28,8 +29,6 @@ async function apifetch(url , options){
     }
 }
 
-function logStep(){
-    
-}
+
 
 export default apifetch
