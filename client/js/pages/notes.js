@@ -1,6 +1,6 @@
 import apifetch from "../api/api.js"
 
-import { getNotesService } from "../service/notes.service.js"
+import { getBookDataService, getNoteService, getNotesService } from "../service/notes.service.js"
 
 const nav = document.getElementsByTagName("nav")
 
@@ -15,6 +15,7 @@ const titleDetails = document.getElementById("title-details")
 const dateDetails = document.getElementById("date-details")
 
 const createNotebtn = document.getElementById("create-note")
+const pageNumberModal = document.querySelector(".page-number-modal-parent")
 const noContent = document.getElementById("no-content")
 const noteForm = document.getElementById("note-form")
 
@@ -46,15 +47,21 @@ libraryBtn.addEventListener("click" ,()=>{
 createNotebtn.addEventListener("click" , ()=>{
     openNoteEditor("" , "")
 
-    //TODO- Reading mode function
-    detailsPannel.classList.add("hide-panel")
-    sidebar.classList.add("hide-panel")
+    readingMode()
+
     createNoteId()
-    document.documentElement.requestFullscreen()
     createNoteList()
 
 
 })
+
+
+
+function readingMode(){
+    detailsPannel.classList.add("hide-panel")
+    sidebar.classList.add("hide-panel")
+    document.documentElement.requestFullscreen()
+}
 
 function openNoteEditor(title , content){
 
@@ -81,31 +88,28 @@ async function createNoteList(){
     notesList.replaceChildren()
 
     const notes = await getNotes()
-    console.log(notes)
+    
     const notesArr = notes.notes
 
     notesArr.forEach((note)=>{
         const list = document.createElement("li")
 
         list.addEventListener("click" , async()=>{
-            const res = await apifetch(`http://localhost:8080/notes/getNote/${note.id}` , {
-                method:"GET",
-                credentials:"include"
-            })
+            const res = await getNoteService(note)
 
-            console.log(res)
+            
+            
+            const result = await res
+            
+            const title = result.data.title
+            const content = result.data.content
 
             const params= new URLSearchParams(window.location.search)
             const bookID = params.get('bookID')
 
-            const bookData = await apifetch(`http://localhost:8080/books/book/${bookID}`)
-            console.log(bookData)
+            const bookData = await getBookDataService(bookID)
+            
             noteDetail(res , bookData)
-
-            const result = await res
-
-            const title = result.data.title
-            const content = result.data.content
             openNoteEditor(title , content)
             autoSaveNote(note.id)
             
@@ -117,11 +121,9 @@ async function createNoteList(){
             list.classList.add("empty-note")
             notesList.appendChild(list)
             autoSaveNote(note.id)
-        
-       
-        return
+            
+            return
         }
-
         else{
             list.textContent = note.title
             notesList.appendChild(list)
@@ -134,17 +136,17 @@ async function createNoteId(){
     const params = new URLSearchParams(window.location.search)
     const bookID =  params.get("bookID")
 
+    pageNumberModal.classList.remove("hidden")
+
     const res = await apifetch(`http://localhost:8080/notes/createNote/${bookID}` , {
-        method:"POST",
         
-        credentials:"include",
+        method:"POST",
+        credentials:"include"
 
     })
 
-    const note = await res;
-    console.log(note)
-    currentNoteId = note.data.id;
-    console.log(currentNoteId)
+    currentNoteId = res.data.id;
+    
 }
 
 async function autoSaveNote(noteID){
@@ -202,6 +204,8 @@ async function noteDetail(data , book){
     titleDetails.textContent = `title: ${data.data.title}`
     dateDetails.textContent = `Created on:${createdAtDate}`
 }
+
+
 
 
 
