@@ -18,6 +18,7 @@ const createNotebtn = document.getElementById("create-note")
 const pageNumberModal = document.querySelector(".page-number-modal-parent")
 const noContent = document.getElementById("no-content")
 const noteForm = document.getElementById("note-form")
+const noteFromInput = document.getElementById("from-page-input")
 
 const notesList = document.querySelector(".notes-list")
 
@@ -48,13 +49,19 @@ createNotebtn.addEventListener("click" , ()=>{
     openNoteEditor("" , "")
 
     readingMode()
+    pageNumberModal.classList.remove("hidden")
 
-    createNoteId()
-    createNoteList()
+    
 
 
 })
 
+noteFromInput.addEventListener('keypress' , function(event){
+    if(event.key==='Enter'){
+        createNoteId(noteFromInput.value)
+        createNoteList()
+    }
+} )
 
 
 function readingMode(){
@@ -131,21 +138,28 @@ async function createNoteList(){
     })
 }
 
-async function createNoteId(){
+async function createNoteId(from){
 
     const params = new URLSearchParams(window.location.search)
     const bookID =  params.get("bookID")
+    
+    const data = {
+        from:from
+    }
 
-    pageNumberModal.classList.remove("hidden")
+    console.log(data)
 
     const res = await apifetch(`http://localhost:8080/notes/createNote/${bookID}` , {
         
         method:"POST",
-        credentials:"include"
-
+        credentials:"include",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(data)
     })
 
-    currentNoteId = res.data.id;
+   
     
 }
 

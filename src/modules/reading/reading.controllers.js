@@ -79,10 +79,13 @@ async function createNote (req ,res){
     
     const userID = req.user.userID
     const bookID = req.params.bookID
+    const pageNumber = Number(req.body.from)
+    
 
     const data = {
         userID:userID,
-        bookID:bookID
+        bookID:bookID,
+        startingFrom:pageNumber
     }
 
     try{
