@@ -16,7 +16,7 @@
         const {userID , noteID} = data
         console.log(noteID)
         const note_query = await pool.query("SELECT title FROM notes WHERE user_id = $1 AND id = $2" , [userID , noteID])
-        const content_query = await pool.query("SELECT * from note_content where note_id = $1" , [noteID])
+        const content_query = await pool.query("SELECT * from note_content where note_id = $1 order by pos" , [noteID])
         console.log("content: " , content_query.rows)
         const title = note_query.rows[0].title
 
@@ -36,7 +36,7 @@
 
     async function createNoteService(data){
 
-        const {userID , bookID ,startingFrom} = data
+        const {userID , bookID ,startingFrom , sectionPos} = data
 
        const emptyCheck = await pool.query("SELECT * FROM notes WHERE user_id = $1 AND book_id = $2 AND title = $3" , [userID , bookID , ""])
 
@@ -44,19 +44,20 @@
         return emptyCheck.rows[0]
        }
 
-        const note_query = await pool.query("INSERT INTO notes (user_id , book_id , title ) VALUES ($1,$2,$3) RETURNING *" , [userID , bookID,""])
-
-       const noteID = note_query.rows[0].id
-
         const content_query = await pool.query("INSERT INTO note_content (note_id , content , page_number) VALUES ($1 , $2,$3) RETURNING *" , [noteID , "" , startingFrom])
+        
+        const contentID = content_query.rows[0].id 
+
+        const note_query = await pool.query("INSERT INTO notes (user_id , book_id , title, head ) VALUES ($1,$2,$3,$4) RETURNING *" , [userID , bookID,"" , contentID])
+
+        const noteID = note_query.rows[0].id
 
        console.log(content_query)
 
-       const contentID = content_query.rows[0].id 
 
         const res = {
             noteID  : noteID,
-            contentID : contentID,
+            
             from: content_query.rows[0].page_number
         }
 

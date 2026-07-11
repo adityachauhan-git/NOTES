@@ -46,10 +46,12 @@ async function getNoteController(req , res){
 
     const userID = req.user.userID
     const noteID = req.params.noteID
+    
 
     const data = {
         userID:userID,
-        noteID:noteID
+        noteID:noteID,
+        
     }
 
     try{
@@ -81,11 +83,14 @@ async function createNote (req ,res){
     const bookID = req.params.bookID
     const pageNumber = Number(req.body.from)
     
+    
+    
 
     const data = {
         userID:userID,
         bookID:bookID,
-        startingFrom:pageNumber
+        startingFrom:pageNumber,
+        sectionPos:sectionPos
     }
 
     try{
@@ -138,7 +143,10 @@ async function saveNoteControllers(req , res){
     }
 }
 
+async function createSectionController(req , res){
+    
+}
 
 
 
-export {createNote , saveNoteControllers , getNotesController , getNoteController}
+export {createNote , saveNoteControllers , getNotesController , getNoteController , createSectionController}
