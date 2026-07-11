@@ -1,4 +1,4 @@
-import {createNoteService , saveNoteService , getNotesService , getNoteService}from "./reading.service.js"
+import {createNoteService , saveNoteService , getNotesService , getNoteService, createSectionService}from "./reading.service.js"
 
 async function getNotesController(req , res){
 
@@ -144,7 +144,21 @@ async function saveNoteControllers(req , res){
 }
 
 async function createSectionController(req , res){
-    
+    const pageNumber = Number(req.body.pageNumber)
+    const noteID = Number(req.body.noteID)
+    const pos = Number(req.body.pos)
+
+    const data = {
+        pageNumber: pageNumber,
+        noteID:noteID,
+        pos:pos
+    }
+
+    const section = await createSectionService(data)
+
+    return res.json({
+        message:section
+    })
 }
 
 

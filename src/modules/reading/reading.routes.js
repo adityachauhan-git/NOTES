@@ -15,6 +15,6 @@ router.get("/getNotes/:bookID" , authMiddleware , getNotesController)
 router.get("/getNote/:noteID", authMiddleware , getNoteController) 
 router.post("/createNote/:bookID" ,authMiddleware, createNote)
 router.put("/saveNote" ,authMiddleware, validate(noteSchema) ,saveNoteControllers)
-router.post("/section" , authMiddleware , createSectionController)
+router.post("/section" , createSectionController)
 
 export default router;

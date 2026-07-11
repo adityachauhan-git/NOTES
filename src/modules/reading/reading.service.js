@@ -65,6 +65,16 @@
         
     }
 
+    async function createSectionService(data){
+
+        const {pageNumber , noteID , pos} = data
+
+        const createContentQuery = await pool.query("INSERT INTO note_content(note_id , content , page_number , pos) VALUES ($1 , $2 , $3 , $4) RETURNING *" , [noteID , " " , pageNumber , pos])
+
+        return createContentQuery.rows[0]
+
+    }
+
     async function saveNoteService(data){
         const {noteID , title , content} = data
 
@@ -75,4 +85,4 @@
 
 
 
-    export {createNoteService , saveNoteService , getNotesService , getNoteService}
+    export {createNoteService , saveNoteService , getNotesService , getNoteService , createSectionService }
