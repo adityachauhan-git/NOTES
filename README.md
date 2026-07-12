@@ -1,6 +1,40 @@
 # Notes
 
-A lightweight notes and book-management web application with authentication, note creation, and a personal library view. The project uses a Node.js and Express backend with a static frontend served from the client folder.
+A lightweight notes and book-management web application with user authentication, note creation, and a personal library view. The backend is built with Node.js and Express; the frontend is static HTML/CSS/JS in the `client/` folder.
+
+## Quick Start
+
+1. Install server dependencies and create environment file:
+
+```bash
+cd src
+npm install
+cp .env.example .env    # or create .env manually
+```
+
+2. Set environment variables in `src/.env` (example):
+
+```env
+DATABASE_URL=postgres://user:pass@host:port/dbname
+ACCESS_TOKEN_KEY=your_access_token_secret
+REFRESH_TOKEN_KEY=your_refresh_token_secret
+PORT=8080
+```
+
+3. Start the backend:
+
+```bash
+cd src
+node server.js
+```
+
+4. Serve the frontend (use Live Server in VS Code or a simple static server):
+
+```bash
+npx serve client  # or use Live Server extension
+```
+
+The backend defaults to port `8080`; the static frontend can be served on any port (commonly `5500` for Live Server).
 
 ## Features
 
@@ -8,89 +42,67 @@ A lightweight notes and book-management web application with authentication, not
 - JWT-based authentication with refresh-token support
 - Create, view, and save notes
 - Organize notes by book
-- View a personal library of books
-- Responsive browser-based UI for notes and auth pages
+- Personal library view
 
 ## Tech Stack
 
 - Frontend: HTML, CSS, JavaScript
 - Backend: Node.js, Express
-- Database: PostgreSQL (via Supabase connection string)
+- Database: PostgreSQL (Supabase-compatible)
 - Validation: Zod
 - Authentication: JSON Web Tokens and cookies
 
 ## Project Structure
 
-- client/ - Static HTML, CSS, and JavaScript frontend pages
-- src/ - Server and backend modules
-  - modules/auth/ - Registration, login, and token handling
-  - modules/book/ - Book library endpoints
-  - modules/reading/ - Note CRUD endpoints
-  - common/ - Shared config, middleware, and utilities
+- client/ — Static frontend pages and assets
+- src/ — Server and backend modules
+  - modules/auth/ — Registration, login, and token handling
+  - modules/book/ — Book library endpoints
+  - modules/reading/ — Note CRUD endpoints
+  - common/ — Shared config, middleware, and utilities
 
-## Prerequisites
+## API Examples
 
-- Node.js 18+
-- npm
-- A PostgreSQL-compatible database (the project is currently configured to use a Supabase connection string)
-
-## Installation
-
-1. Open the project folder.
-2. Install backend dependencies:
+Register a user:
 
 ```bash
-cd src
-npm install
+curl -X POST http://localhost:8080/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com","password":"s3cret"}'
 ```
 
-## Environment Variables
-
-Create a .env file inside the src folder with values similar to:
-
-```env
-DATABASE_URL=your_postgresql_connection_string
-ACCESS_TOKEN_KEY=your_access_token_secret
-REFRESH_TOKEN_KEY=your_refresh_token_secret
-PORT=8080
-```
-
-## Running the App
-
-Start the backend server:
+Login (returns tokens):
 
 ```bash
-cd src
-node server.js
+curl -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com","password":"s3cret"}'
 ```
 
-The server will run on port 8080 by default.
+Notes endpoints (authenticated):
 
-For the frontend, open the HTML files in the client folder with a local server such as Live Server in VS Code. The app is expected to be served from a browser environment on port 5500.
+- `GET /notes/getNotes/:bookID`
+- `GET /notes/getNote/:noteID`
+- `POST /notes/createNote/:bookID`
+- `PUT /notes/saveNote`
 
-## API Overview
+Books endpoints:
 
-### Authentication
+- `GET /books/library`
+- `GET /books/book/:id`
+- `POST /books/addbooks`
+- `DELETE /books/deleteBook/:id`
 
-- POST /auth/register
-- POST /auth/login
-- GET /auth/refreshToken
+## Development Tips
 
-### Notes
+- Use the `client/` folder with the Live Server extension for faster frontend iteration.
+- Ensure `DATABASE_URL` points to a running PostgreSQL instance. If using Supabase, use the database connection string provided by Supabase.
+- Middleware and validation logic live under `src/common/`.
 
-- GET /notes/getNotes/:bookID
-- GET /notes/getNote/:noteID
-- POST /notes/createNote/:bookID
-- PUT /notes/saveNote
+## Contributing
 
-### Books
+Feel free to open issues or submit pull requests. For code changes, run the server locally and include short notes on steps to reproduce.
 
-- GET /books/library
-- GET /books/book/:id
-- POST /books/addbooks
-- DELETE /books/deleteBook/:id
+## License
 
-## Notes
-
-- The frontend is served as static files, so it is best run through a simple local web server rather than opening the HTML files directly.
-- The current backend configuration uses CORS for the local frontend origin at http://127.0.0.1:5500.
+This project is provided as-is. Add a license file if you plan to publish or share the code.
