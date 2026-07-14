@@ -1,4 +1,4 @@
-import apifetch from "../api/api";
+import apifetch from "../api/api.js";
 
 async function loginService(data){
 
@@ -15,3 +15,6 @@ async function loginService(data){
     )
 
 }
+
+
+export default loginService

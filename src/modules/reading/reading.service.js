@@ -43,16 +43,18 @@
        if(emptyCheck.rowCount!==0){
         return emptyCheck.rows[0]
        }
+       
+
+       const note_query = await pool.query("INSERT INTO notes (user_id , book_id , title) VALUES ($1,$2,$3) RETURNING *" , [userID , bookID,"" ])
+
+       const noteID = note_query.rows[0].id
 
         const content_query = await pool.query("INSERT INTO note_content (note_id , content , page_number) VALUES ($1 , $2,$3) RETURNING *" , [noteID , "" , startingFrom])
         
-        const contentID = content_query.rows[0].id 
+     
 
-        const note_query = await pool.query("INSERT INTO notes (user_id , book_id , title, head ) VALUES ($1,$2,$3,$4) RETURNING *" , [userID , bookID,"" , contentID])
 
-        const noteID = note_query.rows[0].id
-
-       console.log(content_query)
+        
 
 
         const res = {
@@ -60,6 +62,7 @@
             
             from: content_query.rows[0].page_number
         }
+        console.log(res)
 
         return res
         
@@ -76,11 +79,12 @@
     }
 
     async function saveNoteService(data){
-        const {noteID , title , content} = data
+        const {noteID , title , content , sectionID} = data
 
-        const note_query = await pool.query("UPDATE notes SET title = $1 WHERE id = $2" , [title , noteID])
-        const content_query = await pool.query("UPDATE note_content SET content=$1 WHERE note_id = $2" , [content , noteID])
+        const content_query = await pool.query("UPDATE note_content SET content=$1 WHERE note_id = $2 AND id = $3" , [content , noteID , sectionID])
 
+        
+        
     }
 
 

@@ -50,8 +50,7 @@ async function getNoteController(req , res){
 
     const data = {
         userID:userID,
-        noteID:noteID,
-        
+        noteID:noteID
     }
 
     try{
@@ -82,6 +81,7 @@ async function createNote (req ,res){
     const userID = req.user.userID
     const bookID = req.params.bookID
     const pageNumber = Number(req.body.from)
+    const sectionPos = Number(req.body.sectionPos)
     
     
     

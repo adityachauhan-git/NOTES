@@ -1,4 +1,5 @@
-import { registerService } from "../service/register.service"
+import loginService from "../service/login.service.js"
+
 
 const usernameInput = document.querySelector(".username")
 const passwordInput = document.querySelector(".password")
@@ -11,6 +12,9 @@ const loginErr = document.getElementById("credentials-error")
 loginBtn.addEventListener("click" , handleLogin)
 
 async function handleLogin(){
+
+    console.log("Hello")
+
     const username = usernameInput.value
     const password = passwordInput.value
 
@@ -18,13 +22,15 @@ async function handleLogin(){
         userName:username,
         pass:password
     }
+    try{
+    const res = loginService(data)
+    window.location.href = 'library.html'
+}
 
-    const res = registerService(data)
-    if(res.ok){
-        window.location.href = 'library.html'
-    }
-    else{
-        loginErr.classList.remove("hidden")
-    }
+catch(err){
+    console.log(err)
+}
+
+
 }
 
